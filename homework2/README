@@ -1,0 +1,29 @@
+Method/Algorithm:
+
+First, we split the input query into a keyword set and a phrase set. We use phrase set to create a pool contain all documents that are considered. In the code, we use positional index list to find documents of all phrase queries. After creating pool, we calculate the score of keywords and phrases for every documents. Then use a dictionary to store the score of every documents in the pool. (The detail of every function you can refer to the comment in the code)
+
+Assumption:
+
+1.We assume only the document that contains the whole phrase can get the score of this phrase. For example, the query is ":better life:", only the document has those 2 consecutive words will have non-zero score. If a document only contain "better" or "life" separately, which means their positional index do not fit together, or those two words are not consecutive, we do not give score on it.
+
+2.If input query only contain keyword, we use all documents as pool.
+
+3.On the assignment description, in the second part: Answering Keyword and Phrase Queries, it says the first parameter should be "a path to a directory containing the index". However, it does not say any details in that directory folder, therefore we assume the directory could contain multiple tsv (index) files. For example, the directory could have both dr_seuss_lines.tsv and movie_plot.tsv. Therefore, when you type the first argument, please use the path to the index file with the corpus. For instance, "/Desktop/cmput361/assignment2/data/dr_seuss_lines.tsv" is the first argument in my computer.
+
+4.We assume K (the second argument) should be a positive integer.
+
+5.When we are counting arguments, we start from zero.
+
+6.We assume input queries, for both phrase and keywords, will have quotation marks. In other words, the last argument should be in quotation marks
+
+Error handling:
+
+For Index creation: Check if the JSON file exist in the input path or not. Check if the storing directory exist or not. For Answering Keyword and Phrase Queries: Check if the path has inputted index file Check if k is positive integer. If the input phrase missing colons, for example, inputted ":someone like", the program output "Invalid input: missing colons"
+
+How to run the program:
+
+Please install nltk module. By using pip3 install nltk in the terminal.
+
+For the first part: Index creation, type: python3 homework1.py argv[1] argv[2], where argv[1] is a path to the JSON file directory with the corpus, and argv[2] is a path to the directory where the tsv file will be store. For instance, in my computer, the input is: python3 homework.py /Desktop/cmput361/assignment2/data/dr_seuss_lines.json /Desktop/cmput361/assignment2/data
+
+For the second part: Answering Keyword and Phrase Queries, type: python3 homework2.py argv[1] K "queries", where argv[1] is the to a directory containing the index, and K is number of ranked documents to be returned. Most importantly, when you input queries, please use quotation marks. For instance, in my computer, the input is: python3 homework2.py /Desktop/cmput361/assignment2/data/dr_seuss_lines.tsv 6 ":someone like you:"
